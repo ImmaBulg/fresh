@@ -3,11 +3,8 @@
 return [
     'latest' => 'latest',
     'the_best' => 'the best',
-    'contact_us' => 'contact us',
-    'director' => 'direction',
-    'dop' => 'dop',
+    'photographer' => 'photographer',
     'executive' => 'executive producer',
-    'producer' => 'producer',
-    'agency' => 'agency',
+    'assistant' => 'assistant',
     'client' => 'client',
 ];

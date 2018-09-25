@@ -27,8 +27,8 @@
                             <input type="text" class="form-control" id="en_title" name="en_title" placeholder="Заголовок на английском" value="{{ isset($video) ? $video->en_title : old('en_title') }}">
                         </div>
                         <div class="form-group">
-                            <label for="">Ссылка на видео</label>
-                            <input type="text" class="form-control" id="url" name="url" placeholder="Ссылка на видео" value="{{ isset($video) ? $video->url : old('url') }}">
+                            <label for="">ID видео</label>
+                            <input type="text" class="form-control" id="vimeo_id" name="vimeo_id" placeholder="ID видео" value="{{ isset($video) ? $video->vimeo_id : old('vimeo_id') }}">
                         </div>
                         <div class="form-group">
                             <label for="">Лучшее</label>

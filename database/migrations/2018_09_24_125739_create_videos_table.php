@@ -33,7 +33,7 @@ class CreateVideosTable extends Migration
             $table->string('en_agency')->nullable();
             $table->string('ru_client')->nullable();
             $table->string('en_client')->nullable();
-            $table->string('url');
+            $table->string('vimeo_id');
             $table->integer('order')->default(100);
             $table->timestamps();
         });

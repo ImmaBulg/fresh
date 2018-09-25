@@ -64,4 +64,31 @@ $(document).ready(function () {
             _super($item, container);
         }
     });
+
+    $('.deleteImage').click(function() {
+        var image = $(this).data('img');
+        var album_id = $(this).data('album');
+        var _this = this;
+        $('#before-load').css('display', 'block');
+        $('#before-load').find('i').fadeIn();
+
+        $.ajax({
+            url: '/api/delete_album_image',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                image: image,
+                album_id: album_id,
+            },
+            success: function(answer) {
+                console.log(answer);
+                $('#before-load').find('i').fadeOut().end().fadeOut('slow');
+                $(_this).parent().remove();
+            },
+            error: function(answer) {
+                console.log(answer);
+                $('#before-load').find('i').fadeOut().end().fadeOut('slow');
+            }
+        });
+    });
 });

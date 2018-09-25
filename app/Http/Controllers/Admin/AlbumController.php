@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Video;
+use App\Models\Album;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class VideoController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::orderBy('order')->get();
+        $albums = Album::orderBy('order')->get();
 
-        return view('admin.video.list', compact('videos'));
+        return view('admin.album.list', compact('albums'));
     }
 
     /**
@@ -27,7 +27,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('admin.video.form');
+        return view('admin.album.form');
     }
 
     /**
@@ -41,12 +41,13 @@ class VideoController extends Controller
         $this->validate($request, [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
-            'vimeo_id' => 'required|max:255',
         ]);
+        $attrbiutes = $request->all();
+        unset($attrbiutes['imgs'], $attrbiutes['title_img']);
 
-        $video = Video::add($request->all());
+        $album = Album::add($attrbiutes, $request->file('title_img'), $request->file('imgs'));
 
-        return redirect()->route('admin.video.list')->with('Success', 'Видео успешно добавлено');
+        return redirect()->route('admin.album.list')->with('Success', 'Альбом успешно добавлено');
     }
 
     /**
@@ -66,9 +67,9 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Video $video)
+    public function edit(Album $album)
     {
-        return view('admin.video.form', ['video' => $video]);
+        return view('admin.album.form', ['album' => $album]);
     }
 
     /**
@@ -83,13 +84,15 @@ class VideoController extends Controller
         $this->validate($request, [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
-            'vimeo_id' => 'required|max:255',
         ]);
 
-        $video = Video::where(['id' => $request->input('id')])->first();
-        $video->edit($request->all());
+        $attrbiutes = $request->all();
+        unset($attrbiutes['imgs'], $attrbiutes['title_img']);
 
-        return redirect()->route('admin.video.list')->with('success', 'Слайд успешно обновлен');
+        $album = Album::where(['id' => $request->input('id')])->first();
+        $album->edit($attrbiutes, $request->file('title_img') ?: null, $request->file('imgs') ?: null);
+
+        return redirect()->route('admin.album.list')->with('success', 'Альбом успешно обновлен');
     }
 
     /**
@@ -98,9 +101,9 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Video $video)
+    public function destroy(Album $album)
     {
-        $video->remove();
-        return redirect()->route('admin.video.list')->with('success', 'Слайд успешно удален');
+        $album->remove();
+        return redirect()->route('admin.album.list')->with('success', 'Альбом успешно удален');
     }
 }

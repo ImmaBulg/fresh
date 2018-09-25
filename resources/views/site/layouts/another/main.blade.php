@@ -23,6 +23,7 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script></body>
 <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-@yield('js')
+
+@yield('scripts')
 
 </html>

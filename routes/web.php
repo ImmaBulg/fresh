@@ -40,12 +40,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('/store', ['uses' => 'VideoController@store', 'as' => 'store']);
         Route::get('/edit/{video}', ['uses' => 'VideoController@edit', 'as' => 'edit']);
         Route::post('/update', ['uses' => 'VideoController@update', 'as' => 'update']);
-        Route::get('/delete/{slide}', ['uses' => 'VideoCotroller@destroy', 'as' => 'delete']);
+        Route::get('/delete/{video}', ['uses' => 'VideoController@destroy', 'as' => 'delete']);
+    });
+
+    Route::group(['prefix' => 'album', 'as' => 'album.'], function() {
+        Route::get('/', ['uses' => 'AlbumController@index', 'as' => 'list']);
+        Route::get('/add', ['uses' => 'AlbumController@create', 'as' => 'create']);
+        Route::post('/store', ['uses' => 'AlbumController@store', 'as' => 'store']);
+        Route::get('/edit/{album}', ['uses' => 'AlbumController@edit', 'as' => 'edit']);
+        Route::post('/update', ['uses' => 'AlbumController@update', 'as' => 'update']);
+        Route::get('/delete/{album}', ['uses' => 'AlbumController@destroy', 'as' => 'delete']);
     });
 });
 
 Route::group(['middleware' => 'lang', 'as' => 'site.'], function() {
     Route::get('set_lang', ['as' => 'set_lang', 'uses' => 'LanguageController@setLanguage']);
     Route::get('/', ['uses' => 'IndexController@index', 'as' => 'index']);
+    Route::get('/video/{video}', ['uses' => 'PageController@showVideo', 'as' => 'video']);
+    Route::get('/photo/{album}', ['uses' => 'PageController@showAlbum', 'as' => 'album']);
     Route::get('/{slug}', 'PageController@showPage')->name('page');
 });

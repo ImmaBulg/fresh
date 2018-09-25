@@ -11,7 +11,7 @@
             <div class="menu-blk">
                 <div class="menu-block">
                     @forelse($menus as $menu)
-                        <a class="menu-item" href="{{ $menu->outer_link ? '/' . $menu->slug : $menu->slug }}">{{ config('app.locale') === 'en' ? $menu->en_title : $menu->title }}</a>
+                        <a class="menu-item" href="{{ !$menu->outer_link ? route('site.page', $menu->slug) : $menu->slug }}">{{ config('app.locale') === 'en' ? $menu->en_title : $menu->title }}</a>
                     @empty
                         <a class="menu-item" href="#">video</a>
                         <a class="menu-item" href="#">photo</a>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="menu-block-mob">
                     @forelse($menus as $menu)
-                        <a class="menu-item" href="{{ $menu->outer_link ? '/' . $menu->slug : $menu->slug }}">{{ config('app.locale') === 'en' ? $menu->en_title : $menu->title }}</a>
+                        <a class="menu-item" href="{{ !$menu->outer_link ? route('site.page', $menu->slug) : $menu->slug }}">{{ config('app.locale') === 'en' ? $menu->en_title : $menu->title }}</a>
                     @empty
                         <a class="menu-item" href="#">video</a>
                         <a class="menu-item" href="#">photo</a>

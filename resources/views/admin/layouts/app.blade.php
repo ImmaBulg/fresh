@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/skin-black.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/admin_main.css') }}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,7 +40,12 @@
     @include('admin.layouts.left-menu')
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="position:relative;">
+        <!-- Preloader -->
+        <div id="before-load">
+            <!-- Иконка Font Awesome -->
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
         @yield('content')
     </div>
     <!-- /.content-wrapper -->
@@ -56,7 +63,10 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}"></script>
-
+<!-- Jquery sortable -->
+<script src="{{ asset('js/jquery-sortable.js') }}"></script>
+<!-- Main js -->
+<script src="{{ asset('js/admin_main.js') }}"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->

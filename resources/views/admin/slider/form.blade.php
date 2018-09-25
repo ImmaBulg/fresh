@@ -28,11 +28,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Описание на русском</label>
-                                <input type="text" class="form-control" id="ru_description" name="ru_description" placeholder="Описание на русском" value="{{ isset($slide) ? $slide->ru_description : old('ru_description') }}">
+                                <textarea class="form-control" name="ru_description" id="ru_description" cols="30" rows="10">{{ isset($slide) ? $slide->ru_description : old('ru_description') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Описание на английском</label>
-                                <input type="text" class="form-control" id="en_description" name="en_description" placeholder="Название" value="{{ isset($slide) ? $slide->en_description : old('en_description') }}">
+                                <textarea class="form-control" name="en_description" id="en_description" cols="30" rows="10">{{ isset($slide) ? $slide->en_description : old('en_description') }}</textarea>
+
                             </div>
 
                             <div class="form-group">

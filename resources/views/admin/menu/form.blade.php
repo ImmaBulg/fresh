@@ -23,17 +23,20 @@
                             <input type="text" class="form-control" id="title" name="title" placeholder="Название" value="{{ isset($menu_item) ? $menu_item->title : old('name') }}">
                         </div>
                         <div class="form-group">
+                            <label for="">Название на английском</label>
+                            <input type="text" class="form-control" id="en_title" name="en_title" placeholder="Название на английском" value="{{ isset($menu_item) ? $menu_item->en_title : old('name') }}">
+                        </div>
+                        <div class="form-group">
                             <label for="">Slug</label>
                             <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug" value="{{ isset($menu_item) ? $menu_item->slug : old('slug') }}">
                         </div>
                         <div class="form-group">
-                            <label for="">Родительский пункт</label>
-                            <select name="parent_id" id="parent_id" class="form-control">
-                                <option selected value="">Не выбрано</option>
-                                @foreach($menus as $menu)
-                                    <option value="{{ $menu->id }}">{{ $menu->title }}</option>
-                                @endforeach
-                            </select>
+                            <label for="">Отображать</label>
+                            <input type="checkbox" name="status" id="status" {{ isset($menu_item) ? ($menu_item->status ? 'checked' : '') : 'checked' }}>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Внешняя ссылка</label>
+                            <input type="checkbox" name="outer_link" id="outer_link" {{ isset($menu_item) ? ($menu_item->outer_link ? 'checked' : '') : '' }}>
                         </div>
                     </div>
                     <div class="box-footer">

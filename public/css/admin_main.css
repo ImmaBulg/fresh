@@ -1,0 +1,54 @@
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+table.sorted_table tr.placeholder {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    /** More li styles **/
+}
+
+table.sorted_table tr.placeholder:before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    margin-top: -4px;
+    margin-left: -4px;
+    border: 5px solid transparent;
+    border-left-color: red;
+    border-right: none;
+    /** Define arrowhead **/
+}
+
+table.sorted_table tr {
+    cursor: pointer;
+    /** More li styles **/
+}
+
+#before-load {
+    position: absolute; /*фиксированное положение блока*/
+    left: 0; /*положение элемента слева*/
+    top: 0; /*положение элемента сверху*/
+    right: 0; /*положение элемента справа*/
+    bottom: 0; /*положение элемента снизу*/
+    background: #fff; /*цвет заднего фона блока*/
+    z-index: 1001; /*располагаем его над всеми элементами на странице*/
+    opacity: 0.85;
+    display: none;
+}
+#before-load i {
+    font-size: 70px; /*размер иконки*/
+    position: absolute; /*положение абсолютное, позиционируется относительно его ближайшего предка*/
+    left: 50%; /*слева 50% от ширины родительского блока*/
+    top: 50%; /*сверху 50% от высоты родительского блока*/
+    margin: -35px 0 0 -35px; /*смещение иконки, чтобы она располагалась по центру*/
+}

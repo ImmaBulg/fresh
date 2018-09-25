@@ -10,15 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'lang'], function() {
-    Route::get('set_lang', ['as' => 'set_lang', 'uses' => 'LanguageController@setLanguage']);
-
-    Route::get('/', function () {
-        return view('welcome');
-    });
-
-    Route::get('/home', 'HomeController@index')->name('home');
-});
 
 Auth::routes();
 
@@ -42,4 +33,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('/update', ['uses' => 'SliderController@update', 'as' => 'update']);
         Route::get('/delete/{slide}', ['uses' => 'SliderController@destroy', 'as' => 'delete']);
     });
+
+    Route::group(['prefix' => 'video', 'as' => 'video.'], function() {
+        Route::get('/', ['uses' => 'VideoController@index', 'as' => 'list']);
+        Route::get('/add', ['uses' => 'VideoController@create', 'as' => 'create']);
+        Route::post('/store', ['uses' => 'VideoController@store', 'as' => 'store']);
+        Route::get('/edit/{video}', ['uses' => 'VideoController@edit', 'as' => 'edit']);
+        Route::post('/update', ['uses' => 'VideoController@update', 'as' => 'update']);
+        Route::get('/delete/{slide}', ['uses' => 'VideoCotroller@destroy', 'as' => 'delete']);
+    });
+});
+
+Route::group(['middleware' => 'lang', 'as' => 'site.'], function() {
+    Route::get('set_lang', ['as' => 'set_lang', 'uses' => 'LanguageController@setLanguage']);
+    Route::get('/', ['uses' => 'IndexController@index', 'as' => 'index']);
+    Route::get('/{slug}', 'PageController@showPage')->name('page');
 });

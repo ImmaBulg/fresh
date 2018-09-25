@@ -15,7 +15,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::get();
+        $menus = Menu::orderBy('order')->get();
 
         return view('admin.menu.list', compact('menus'));
     }
@@ -27,8 +27,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $parent_menus = Menu::whereNull('parent_id')->get();
-        return view('admin.menu.form', ['menus' => $parent_menus]);
+        return view('admin.menu.form');
     }
 
     /**
@@ -41,6 +40,7 @@ class MenuController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:255',
+            'en_title' => 'required|max:255',
             'slug' => 'required|max:255',
         ]);
         $menu_item = Menu::add($request->all());
@@ -67,9 +67,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        $parent_menus = Menu::whereNull('parent_id')->get();
-
-        return view('admin.menu.form', ['menus' => $parent_menus, 'menu_item' => $menu]);
+        return view('admin.menu.form', ['menu_item' => $menu]);
     }
 
     /**
@@ -83,12 +81,12 @@ class MenuController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:255',
+            'en_title' => 'required|max:255',
             'slug' => 'required|max:255',
         ]);
 
         $menu_item = Menu::where(['id' => $request->input('id')])->first();
         $menu_item->edit($request->all());
-
         return redirect()->route('admin.menu.list')->with('success', 'Пункт успешно обновлен');
     }
 

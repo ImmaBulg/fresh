@@ -8,19 +8,25 @@ use Illuminate\Support\Facades\Storage;
 class Slide extends Model
 {
     protected $fillable = [
-        'ru_title', 'en_title', 'ru_description', 'en_description', 'mob_img', 'desc_img'
+        'ru_title', 'en_title', 'ru_description', 'en_description', 'mob_img', 'desc_img', 'order',
     ];
 
     public static function add($attributes): self
     {
-        $menu_item = new static($attributes);
-        $menu_item->save();
+        $slide = new static($attributes);
+        $last_slide = Slide::get()->last();
+        $slide->order = isset($last_slide) ? $last_slide->order + 100 : 100;
+        $slide->save();
 
-        return $menu_item;
+        return $slide;
     }
 
     public function uploadImage($files)
     {
+        /*
+         * TODO
+         * Сделать резайс картинок (пока неизвестен размер для ресайза)
+         */
         $files[0]->storeAs('public/uploads/images', 'desc_img_' . $this->id . '.' . $files[0]->extension());
         $files[1]->storeAs('public/uploads/images', 'mob_img_' . $this->id . '.' . $files[1]->extension());
         $this->desc_img = 'desc_img_' . $this->id . '.' . $files[0]->extension();

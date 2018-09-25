@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                        <table class="table table-hover sorted_table slide_table">
                             <thead>
                             <tr>
                                 <td>ID</td>
@@ -35,7 +35,7 @@
                             </thead>
                             <tbody>
                             @forelse($slides as $slide)
-                                <tr>
+                                <tr data-id="{{ $slide->id }}">
                                     <td>{{ $slide->id }}</td>
                                     <td><span>{{ $slide->ru_title }}</span><br><span>{{ $slide->en_title }}</span></td>
                                     <td>

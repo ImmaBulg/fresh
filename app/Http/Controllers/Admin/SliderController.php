@@ -15,7 +15,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $slides = Slide::get();
+        $slides = Slide::orderBy('order')->get();
 
         return view('admin.slider.list', compact('slides'));
     }
@@ -45,7 +45,6 @@ class SliderController extends Controller
             'en_description' => 'required|max:255',
         ]);
 
-        dump($request);
 
         $slide = Slide::add($request->all());
         $slide->uploadImage([$request->file('desc_img'), $request->file('mob_img')]);

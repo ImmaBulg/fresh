@@ -22,23 +22,23 @@
                         </div>
                     </div>
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                        <table class="table table-hover sorted_table menu_table">
                             <thead>
                                 <tr>
                                     <td>ID</td>
                                     <td>Название</td>
                                     <td>Slug</td>
-                                    <td>Родительская категория</td>
+                                    <td>Статус</td>
                                     <td></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($menus as $menu_item)
-                                    <tr>
+                                    <tr data-id="{{ $menu_item->id }}">
                                         <td>{{ $menu_item->id }}</td>
                                         <td>{{ $menu_item->title }}</td>
                                         <td>{{ $menu_item->slug }}</td>
-                                        <td>{{ $menu_item->parent_id }}</td>
+                                        <td>{{ $menu_item->status ? 'Отображается' : 'Скрыт' }}</td>
                                         <td>
                                             <a href="{{ route('admin.menu.edit', $menu_item) }}"><i class="fa fa-pencil"></i></a>
                                             <a href="{{ route('admin.menu.delete', $menu_item) }}"><i class="fa fa-trash-o"></i></a>

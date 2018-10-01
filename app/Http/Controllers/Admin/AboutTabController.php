@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Video;
+use App\Models\AboutTab;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
-class VideoController extends Controller
+class AboutTabController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::orderBy('order')->get();
+        $tabs = AboutTab::orderBy('order')->get();
 
-        return view('admin.video.list', compact('videos'));
+        return view('admin.about.list', compact('tabs'));
     }
 
     /**
@@ -27,7 +28,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('admin.video.form');
+        return view('admin.about.form');
     }
 
     /**
@@ -41,21 +42,19 @@ class VideoController extends Controller
         $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
-            'vimeo_id' => 'required|max:255',
         ], [
             'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
             'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
             'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
             'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
-            'vimeo_id.required' => 'Поле "ID видео" обязательно к заполнению',
         ]);
 
         if ($validation->fails())
             return redirect()->back()->withErrors($validation)->withInput();
 
-        $video = Video::add($request->all());
+        $tab = AboutTab::add($request->all());
 
-        return redirect()->route('admin.video.list')->with('Success', 'Видео успешно добавлено');
+        return redirect()->route('admin.about.list')->with('success', 'Вкладка успешно добавлена');
     }
 
     /**
@@ -75,9 +74,9 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Video $video)
+    public function edit(AboutTab $tab)
     {
-        return view('admin.video.form', ['video' => $video]);
+        return view('admin.about.form', compact('tab'));
     }
 
     /**
@@ -87,28 +86,25 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
-            'vimeo_id' => 'required|max:255',
         ], [
             'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
             'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
             'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
             'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
-            'vimeo_id.required' => 'Поле "ID видео" обязательно к заполнению',
         ]);
 
         if ($validation->fails())
             return redirect()->back()->withErrors($validation)->withInput();
 
+        $tab = Album::where(['id' => $request->input('id')])->first();
+        $tab->edit($request->all());
 
-        $video = Video::where(['id' => $request->input('id')])->first();
-        $video->edit($request->all());
-
-        return redirect()->route('admin.video.list')->with('success', 'Слайд успешно обновлен');
+        return redirect()->route('admin.about.list')->with('success', 'Вкладка успешно обновлена');
     }
 
     /**
@@ -117,9 +113,9 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Video $video)
+    public function destroy(AboutTab $tab)
     {
-        $video->remove();
-        return redirect()->route('admin.video.list')->with('success', 'Слайд успешно удален');
+        $tab->remove();
+        return redirect()->route('admin.about.list')->with('success', 'Вкладка успешно удалена');
     }
 }

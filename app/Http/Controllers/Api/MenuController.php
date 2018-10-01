@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\AboutTab;
 use App\Models\Menu;
 use App\Models\Slide;
 use Illuminate\Http\Request;
@@ -25,6 +26,17 @@ class MenuController extends Controller
         $items = $request->input('items');
         foreach ($items as $index => $item) {
             $slide = Slide::find(['id' => $item['id']])->first();
+            $slide->order = ($index + 1) * 100;
+            $slide->save();
+        }
+        return ['answer' => 'success'];
+    }
+
+    public function updateAboutOrder(Request $request)
+    {
+        $items = $request->input('items');
+        foreach ($items as $index => $item) {
+            $slide = AboutTab::find(['id' => $item['id']])->first();
             $slide->order = ($index + 1) * 100;
             $slide->save();
         }

@@ -46,6 +46,20 @@
             <!-- Иконка Font Awesome -->
             <i class="fa fa-spinner fa-spin"></i>
         </div>
+        @if($errors->any())
+            <div class="alert-danger alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(session('success'))
+            <div style="padding-top: 40px;">
+                <div class="alert alert-success">{{ session('success') }}</div>
+            </div>
+        @endif
         @yield('content')
     </div>
     <!-- /.content-wrapper -->
@@ -67,8 +81,13 @@
 <script src="{{ asset('js/jquery-sortable.js') }}"></script>
 <!-- Main js -->
 <script src="{{ asset('js/admin_main.js') }}"></script>
+
+<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+@yield('js')
+
 </body>
 </html>

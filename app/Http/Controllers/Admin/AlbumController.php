@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Album;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class AlbumController extends Controller
 {
@@ -38,10 +39,19 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
+        ], [
+            'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
+            'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
+            'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
+            'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
         ]);
+
+        if ($validation->fails())
+            return redirect()->back()->withErrors($validation)->withInput();
+
         $attrbiutes = $request->all();
         unset($attrbiutes['imgs'], $attrbiutes['title_img']);
 
@@ -81,10 +91,18 @@ class AlbumController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
+        ], [
+            'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
+            'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
+            'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
+            'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
         ]);
+
+        if ($validation->fails())
+            return redirect()->back()->withErrors($validation)->withInput();
 
         $attrbiutes = $request->all();
         unset($attrbiutes['imgs'], $attrbiutes['title_img']);

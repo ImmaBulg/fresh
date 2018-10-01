@@ -38,12 +38,22 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
             'ru_description' => 'required|max:255',
             'en_description' => 'required|max:255',
+        ], [
+            'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
+            'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
+            'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
+            'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
+            'ru_description.required' => 'Поле "Описание на русском" обязательно к заполнению',
+            'en_description.required' => 'Поле "Описание на английском" обязательно к заполнению',
         ]);
+
+        if ($validation->fails())
+            return redirect()->back()->withErrors($validation)->withInput();
 
 
         $slide = Slide::add($request->all());
@@ -82,12 +92,22 @@ class SliderController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'ru_title' => 'required|max:255',
             'en_title' => 'required|max:255',
             'ru_description' => 'required|max:255',
             'en_description' => 'required|max:255',
+        ], [
+            'ru_title.required' => 'Поле "Заголовок на русском" обязательно к заполнению',
+            'ru_title.max' => 'Поле "Заголовок на русском" не должно превышать 255 символов',
+            'en_title.required' => 'Поле "Заголовок на английском" обязательно к заполнению',
+            'en_title.max' => 'Поле "Заголовок на английском" не должно превышать 255 символов',
+            'ru_description.required' => 'Поле "Описание на русском" обязательно к заполнению',
+            'en_description.required' => 'Поле "Описание на английском" обязательно к заполнению',
         ]);
+
+        if ($validation->fails())
+            return redirect()->back()->withErrors($validation)->withInput();
 
         $slide = Slide::where(['id' => $request->input('id')])->first();
         $slide->update($request->all());

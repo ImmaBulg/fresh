@@ -65,6 +65,38 @@ $(document).ready(function () {
         }
     });
 
+    var about_group = $('.about_table').sortable({
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        group: 'about_table',
+        onDrop: function($item, container, _super) {
+            var data = about_group.sortable("serialize").get();
+            var jsonString = JSON.stringify(data[0], null, ' ');
+            $('#before-load').css('display', 'block');
+            $('#before-load').find('i').fadeIn();
+            $.ajax({
+                url: '/api/update_about_order',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    items: data[0],
+                },
+                success: function(answer) {
+                    console.log(answer);
+                    $('#before-load').find('i').fadeOut().end().fadeOut('slow');
+                },
+                error: function(answer) {
+                    console.log(answer);
+                    $('#before-load').find('i').fadeOut().end().fadeOut('slow');
+                }
+            });
+            console.log(data);
+            _super($item, container);
+        }
+    });
+
     $('.deleteImage').click(function() {
         var image = $(this).data('img');
         var album_id = $(this).data('album');

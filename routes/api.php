@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function() {
     Route::post('/update_menus_order', 'MenuController@updateMenuOrder');
     Route::post('/update_slide_order', 'MenuController@updateSlideOrder');
+    Route::post('/update_about_order', 'MenuController@updateAboutOrder');
     Route::post('/delete_album_image', 'ImageController@deleteAlbumImage');
 });
